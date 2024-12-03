@@ -1,0 +1,104 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema seleçãoEP
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema seleçãoEP
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `seleçãoEP` ;
+USE `seleçãoEP` ;
+
+-- -----------------------------------------------------
+-- Table `seleçãoEP`.`cota`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `seleçãoEP`.`cota` (
+  `IDcota` INT NOT NULL,
+  `descricao` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`IDcota`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `seleçãoEP`.`cursos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `seleçãoEP`.`cursos` (
+  `IDcurso` INT NOT NULL,
+  `nomeCurso` VARCHAR(40) NOT NULL,
+  `descrição` VARCHAR(100) NOT NULL,
+  PRIMARY KEY (`IDcurso`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `seleçãoEP`.`media`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `seleçãoEP`.`media` (
+  `IDmedia` INT NOT NULL,
+  `materias` VARCHAR(50) NOT NULL,
+  `notas` INT NOT NULL,
+  PRIMARY KEY (`IDmedia`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `seleçãoEP`.`rede`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `seleçãoEP`.`rede` (
+  `IDrede` INT NOT NULL,
+  `descricao` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`IDrede`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `seleçãoEP`.`alunos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `seleçãoEP`.`alunos` (
+  `CPFalunos` INT NOT NULL,
+  `nome` VARCHAR(50) NOT NULL,
+  `RG` INT NOT NULL,
+  `nascimento` DATETIME NOT NULL,
+  `endereço` VARCHAR(45) NOT NULL,
+  `telefone` INT NOT NULL,
+  `email` VARCHAR(100) NOT NULL,
+  `IDcota` INT NOT NULL,
+  `IDcurso` INT NOT NULL,
+  `IDmedia` INT NOT NULL,
+  `IDrede` INT NOT NULL,
+  PRIMARY KEY (`CPFalunos`),
+  INDEX `IDcota_idx` (`IDcota` ASC) VISIBLE,
+  INDEX `IDcurso_idx` (`IDcurso` ASC) VISIBLE,
+  INDEX `IDmedia_idx` (`IDmedia` ASC) VISIBLE,
+  INDEX `IDrede_idx` (`IDrede` ASC) VISIBLE,
+  CONSTRAINT `IDcota`
+    FOREIGN KEY (`IDcota`)
+    REFERENCES `seleçãoEP`.`cota` (`IDcota`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `IDcurso`
+    FOREIGN KEY (`IDcurso`)
+    REFERENCES `seleçãoEP`.`cursos` (`IDcurso`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `IDmedia`
+    FOREIGN KEY (`IDmedia`)
+    REFERENCES `seleçãoEP`.`media` (`IDmedia`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `IDrede`
+    FOREIGN KEY (`IDrede`)
+    REFERENCES `seleçãoEP`.`rede` (`IDrede`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
